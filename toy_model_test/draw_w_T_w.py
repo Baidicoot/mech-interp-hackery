@@ -3,12 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import colors
 
-with open("output/anthropic_toy_cube.pk", "rb") as f:
+with open("output/anthropic_toy_relu.pk", "rb") as f:
     data = pickle.load(f)
     weights_sparsity = data["weights"]
     biases_sparsity = data["bias"]
-
-sparsity = np.array([0.5 * 0.93 ** i for i in range(100)])
 
 def clean_w(w):
     w_T_w = np.einsum('f r, g r -> f g', w, w)
@@ -44,7 +42,7 @@ plt.savefig("example_no_monosemantic.png")
 
 # plot the mean w_T_w
 
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(10, 10))
 
 w_T_w = np.einsum('i f r, i g r -> i f g', weights_sparsity, weights_sparsity).mean(axis=0)
 w_T_w_nd = w_T_w - np.diag(np.diag(w_T_w))
